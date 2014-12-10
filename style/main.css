@@ -142,13 +142,53 @@
 }
 
 .item-made.go.bad
-
-.item-made.go.bad
 {
-	border-color: #828282;
+
+}
+.item-made.go.bad .item-in
+{
+	border-color: #808080;
+}
+
+.item-made.go.bad.bad-0 .item-in
+{
+	border-width: 4px;
+}
+.item-made.go.bad.bad-1 .item-in
+{
+	border-width: 6px;
+	margin-left: -2px;
+	margin-top: -2px;
+}
+.item-made.go.bad.bad-2 .item-in
+{
+	border-width: 8px;
+	margin-left: -4px;
+	margin-top: -4px;
+}
+.item-made.go.bad.bad-3 .item-in
+{
+	border-width: 10px;
+	margin-left: -6px;
+	margin-top: -6px;
+}
+.item-made.go.bad.bad-4 .item-in
+{
+	border-width: 10px;
+	margin-left: -6px;
+	margin-top: -6px;
+	background: #606060;
+	border-color: #606060;
 }
 
 .item-made .item-in
 {
 
+}
+
+.initial-start
+{
+	-webkit-transform: translate(192px, 384px);
+	-moz-transform: translate(192px, 384px);
+	transform: translate(192px, 384px);
 }
