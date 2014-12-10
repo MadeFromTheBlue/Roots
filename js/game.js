@@ -1,9 +1,11 @@
 function Game(Morpher)
 {
+	this.scoreCounter = document.querySelector(".score");
+	this.colors = ["red", "green", "yellow", "blue"];
+
 	this.size = 4;
 	this.levelLength = 10;
-	this.colors = ["red", "green", "yellow", "blue"];
-	this.morpher = new Morpher;
+	this.morph = new Morpher;
 	
 	this.setup();
 }
@@ -24,42 +26,47 @@ randomArrayElement = function(array)
 
 Game.prototype.createRandomNormals = function()
 {
-	var poss = [];
-	for (int i = 0; i < this.size; i++)
-	{
-		poss.push(i + 1);
-	}
 	var cols = this.colors.slice(0);
 	for (i = 0; i < this.size; i++)
 	{
-		var pos = randomArrayElement(poss);
 		var col = randomArrayElement(cols);
-		removeFromArray(poss, pos);
 		removeFromArray(cols, col);
-		var element = this.morpher.addItem(col, pos, this.currentSide, []);
-		element.addEventListener("mouseover", this.onMouseOverItemOption.bind(this, color, pos));
+		var element = this.morph.addItem(col, i + 1, this.currentSide, []);
+		element.querySelector(".item-in").onmouseover = this.onMouseOverItemOption.bind(this, col, i + 1);
 	}
 };
 
 Game.prototype.onRoomEnd = function(scorebonus, newpos, newside)
 {
+	this.score += scorebonus;
+	this.scoreCounter.textContent = "Score: " + this.score;
+	this.morph.reset();
 	this.room++;
-	this.hasLeft = false;
-	this.onRoomStart(
+	if (this.room == this.levelLength)
+	{
+		this.onLevelEnd();
+	}
+	this.onRoomStart(newpos, newside);
 };
 
 Game.prototype.onRoomStart = function(newpos, newside)
 {
+	this.currentSide = newside;
+	this.createRandomNormals();
+	this.hasLeft = false;
 	var add = [];
+	this.currentColor = this.randomColor();
 	if (this.room == this.currentBad)
 	{
-		var element = this.morpher.addItem(this.randomColor(), newpos, newside, ["bad", "wait"]);
+		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, ["bad"]);
 	}
 	else
 	{
-		var element = this.morpher.addItem(this.randomColor(), newpos, newside, ["wait"]);
+		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, []);
 	}
-	element.addEventListener("mouseover", this.onMouseOverMade.bind(this, element));
+	element.querySelector(".item-in").onmouseover = this.onMouseOverMade.bind(this, element);
+	element.onmouseout = this.onMouseOutMade.bind(this, element);
+	this.morph.addClass(element, "wait");
 };
 
 Game.prototype.onLevelEnd = function()
@@ -71,12 +78,26 @@ Game.prototype.onLevelEnd = function()
 
 Game.prototype.onMouseOverItemOption = function(color, pos)
 {
-
+	var bonus = 0;
+	if (this.room == this.currentBad)
+	{
+		bonus = -1000;
+	}
+	else if (color === this.currentColor)
+	{
+		bonus = 200;
+	}
+	else
+	{
+		bonus = -100;
+	}
+	this.onRoomEnd(bonus, pos, 1 - this.currentSide);
 };
 
-Game.prototype.onMouseNotOverMade = function(element)
+Game.prototype.onMouseOutMade = function(element)
 {
-
+	this.morph.changeClass(element, "wait", "go");
+	this.hasLeft = true;
 };
 
 Game.prototype.onMouseOverMade = function(element)
@@ -97,6 +118,7 @@ Game.prototype.setup = function()
 	this.level = 0;
 	this.room = 0;
 	this.hasLeft = false;
+	this.score = 500;
 	
 	this.createRandomNormals();
 };

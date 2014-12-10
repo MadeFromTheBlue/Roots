@@ -51,6 +51,19 @@ HTMLMorpher.prototype.applyClasses = function(element, classes)
 	element.setAttribute("class", classes.join(" "));
 };
 
+HTMLMorpher.prototype.addClass = function(element, newclass) 
+{
+	var classes = element.getAttribute("class").split(" ");
+	var index = classes.indexOf(newclass);
+	if (index > -1) 
+	{
+		return false;
+	}
+	classes.push(newclass);
+	element.setAttribute("class", classes.join(" "));
+	return true;
+};
+
 HTMLMorpher.prototype.changeClass = function(element, oldclass, newclass) 
 {
 	var classes = element.getAttribute("class").split(" ");

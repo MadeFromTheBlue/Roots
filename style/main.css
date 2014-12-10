@@ -8,13 +8,20 @@
 .game-container, .game-field-container
 {
 	position: absolute;
-	width: 512px;
-	height: 512px;
 }
 
 .game-container
 {
 	padding: 16px 16px;
+	width: 538px;
+	height: 588px;
+}
+
+.game-field-container, .items-container
+{
+	width: 512px;
+	height: 512px;
+	margin-top: 50px;
 }
 
 .item .item-in, .item-made .item-in
@@ -121,31 +128,31 @@
 
 }
 
-.item-made.wait
+.wait
 {
 
 }
-.item-made.wait .item-in
+.wait .item-in
 {
 	background: #D6D6D6;
 	border-color: #D6D6D6;
 	border-style: inset;
 }
 
-.item-made.go
+.go
 {
 
 }
-.item-made.go .item-in
+.go .item-in
 {
 
 }
 
-.item-made.go.bad
+.bad
 {
 
 }
-.item-made.go.bad .item-in
+.bad .item-in
 {
 	border-color: #808080;
 }
