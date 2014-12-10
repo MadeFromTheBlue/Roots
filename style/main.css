@@ -1,0 +1,154 @@
+.container
+{
+	margin: 0 auto; 
+	width: 538px;
+	height: 538px;
+}
+
+.game-container, .game-field-container
+{
+	position: absolute;
+	width: 512px;
+	height: 512px;
+}
+
+.game-container
+{
+	padding: 16px 16px;
+}
+
+.item .item-in, .item-made .item-in
+{
+	border-radius: 4px;
+	position: absolute;
+	width: 114px;
+	height: 114px;
+	border-width: 4px;
+	line-height: 122px;
+	border-style: outset;
+}
+
+.item, .item-made
+{
+	position: absolute;
+	width: 122px;
+	height: 122px;
+	padding: 3px 3px;
+}
+
+.at-t-1
+{
+	-webkit-transform: translate(0px, 0px);
+	-moz-transform: translate(0px, 0px);
+	transform: translate(0px, 0px);
+}
+.at-t-2
+{
+	-webkit-transform: translate(128px, 0px);
+	-moz-transform: translate(128px, 0px);
+	transform: translate(128px, 0px);
+}
+.at-t-3
+{
+	-webkit-transform: translate(256px, 0px);
+	-moz-transform: translate(256px, 0px);
+	transform: translate(256px, 0px);
+}
+.at-t-4
+{
+	-webkit-transform: translate(384px, 0px);
+	-moz-transform: translate(384px, 0px);
+	transform: translate(384px, 0px);
+}
+.at-b-1
+{
+	-webkit-transform: translate(0px, 384px);
+	-moz-transform: translate(0px, 384px);
+	transform: translate(0px, 384px);
+}
+.at-b-2
+{
+	-webkit-transform: translate(128px, 384px);
+	-moz-transform: translate(128px, 384px);
+	transform: translate(128px, 384px);
+}
+.at-b-3
+{
+	-webkit-transform: translate(256px, 384px);
+	-moz-transform: translate(256px, 384px);
+	transform: translate(256px, 384px);
+}
+.at-b-4
+{
+	-webkit-transform: translate(384px, 384px);
+	-moz-transform: translate(384px, 384px);
+	transform: translate(384px, 384px);
+}
+
+.red .item-in
+{
+	background: #FF0000;
+	border-color: #FF0000;
+}
+.green .item-in
+{
+	background: #33CC33;
+	border-color: #33CC33;
+}
+.blue .item-in
+{
+	background: #0066CC;
+	border-color: #0066CC;
+}
+.yellow .item-in
+{
+	background: #FFFF00;
+	border-color: #FFFF00;
+}
+
+.item
+{
+
+}
+
+.item .item-in
+{
+
+}
+
+.item-made
+{
+
+}
+
+.item-made.wait
+{
+
+}
+.item-made.wait .item-in
+{
+	background: #D6D6D6;
+	border-color: #D6D6D6;
+	border-style: inset;
+}
+
+.item-made.go
+{
+
+}
+.item-made.go .item-in
+{
+
+}
+
+.item-made.go.bad
+
+.item-made.go.bad
+{
+	border-color: #828282;
+}
+
+.item-made .item-in
+{
+
+}
