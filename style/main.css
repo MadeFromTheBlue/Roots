@@ -1,27 +1,63 @@
+.score, .level-num
+{
+	font-weight: bold;
+	color: black;
+	text-align: center;
+	font-family: "Trebuchet MS";
+}
+
+.information
+{
+	font-size: 16px;
+	line-height: 18px;
+	font-weight: normal;
+	color: black;
+	text-align: center;
+	font-family: "Trebuchet MS";
+}
+
+.score
+{
+	font-size: 25px;
+	line-height: 28px;
+	height: 32px;
+}
+
+.level-num
+{
+	font-size: 18px;
+	line-height: 20px;
+	height: 20px;
+}
+
 .container
 {
 	margin: 0 auto; 
 	width: 538px;
-	height: 538px;
+	height: 600px;
 }
 
-.game-container, .game-field-container
+.game-container, .game-field-container, .play-container
 {
 	position: absolute;
 }
 
-.game-container
+.play-container
 {
-	padding: 16px 16px;
-	width: 538px;
-	height: 588px;
+	margin-top: 15px;
 }
 
-.game-field-container, .items-container
+.game-container
+{
+	padding: 2px 16px;
+	width: 538px;
+	height: 600px;
+}
+
+.game-field-container, .play-container
 {
 	width: 512px;
 	height: 512px;
-	margin-top: 50px;
 }
 
 .item .item-in, .item-made .item-in
@@ -128,11 +164,11 @@
 
 }
 
-.wait
+.wait, .wait-full
 {
 
 }
-.wait .item-in
+.wait .item-in, .wait-full .item-in
 {
 	background: #D6D6D6;
 	border-color: #D6D6D6;

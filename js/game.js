@@ -1,6 +1,8 @@
-function Game(Morpher)
+function Game(Morpher, dobads)
 {
+	this.hasBad = dobads;
 	this.scoreCounter = document.querySelector(".score");
+	this.levelCounter = document.querySelector(".level-num");
 	this.colors = ["red", "green", "yellow", "blue"];
 
 	this.size = 4;
@@ -8,6 +10,8 @@ function Game(Morpher)
 	this.morph = new Morpher;
 	
 	this.setup();
+	this.lastTick = Date.now();
+	window.requestAnimationFrame(this.tick.bind(this));
 }
 
 removeFromArray = function(array, element)
@@ -24,6 +28,20 @@ randomArrayElement = function(array)
 	return array[Math.floor(Math.random() * array.length)];
 };
 
+Game.prototype.tick = function()
+{
+	var time = Date.now();
+	var dt = time - this.lastTick;
+	this.lastTick = time;
+	if (this.hasLeft)
+	{
+		this.score -= this.droprate * (dt / 1000.0);
+	}
+	this.scoreCounter.textContent = Math.floor(this.score) + "";
+	this.levelCounter.textContent = this.level + "-" + this.room;
+	window.requestAnimationFrame(this.tick.bind(this));
+}
+
 Game.prototype.createRandomNormals = function()
 {
 	var cols = this.colors.slice(0);
@@ -39,7 +57,6 @@ Game.prototype.createRandomNormals = function()
 Game.prototype.onRoomEnd = function(scorebonus, newpos, newside)
 {
 	this.score += scorebonus;
-	this.scoreCounter.textContent = "Score: " + this.score;
 	this.morph.reset();
 	this.room++;
 	if (this.room == this.levelLength)
@@ -56,7 +73,7 @@ Game.prototype.onRoomStart = function(newpos, newside)
 	this.hasLeft = false;
 	var add = [];
 	this.currentColor = this.randomColor();
-	if (this.room == this.currentBad)
+	if (this.room == this.currentBad && this.hasBad)
 	{
 		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, ["bad"]);
 	}
@@ -73,13 +90,15 @@ Game.prototype.onLevelEnd = function()
 {
 	this.level++;
 	this.room = 0;
+	this.droprate += 15;
+	this.droprate *= 1.08;
 	this.currentBad = Math.floor(Math.random() * this.levelLength);
 };
 
 Game.prototype.onMouseOverItemOption = function(color, pos)
 {
 	var bonus = 0;
-	if (this.room == this.currentBad)
+	if (this.room == this.currentBad && this.hasBad)
 	{
 		bonus = -1000;
 	}
@@ -96,8 +115,10 @@ Game.prototype.onMouseOverItemOption = function(color, pos)
 
 Game.prototype.onMouseOutMade = function(element)
 {
-	this.morph.changeClass(element, "wait", "go");
-	this.hasLeft = true;
+	if (this.morph.changeClass(element, "wait", "go"))
+	{
+		this.hasLeft = true;
+	}
 };
 
 Game.prototype.onMouseOverMade = function(element)
@@ -119,6 +140,10 @@ Game.prototype.setup = function()
 	this.room = 0;
 	this.hasLeft = false;
 	this.score = 500;
+	this.droprate = 30;
 	
+	var element = this.morph.addItemInitial(this.currentColor, ["wait-full"]);
+	element.querySelector(".item-in").onmouseover = (function() {this.morph.changeClass(element, "wait-full", "wait")}).bind(this);
+	element.onmouseout = this.onMouseOutMade.bind(this, element);
 	this.createRandomNormals();
 };
