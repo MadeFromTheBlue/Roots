@@ -1,15 +1,16 @@
-function HTMLMorpher()
+function HTMLManipulator()
 {
+	this.container = document.querySelector(".container");
 	this.itemContainer = document.querySelector(".items-container");
 	this.messageContainer = document.querySelector(".game-message");
 };
 
-HTMLMorpher.prototype.reset = function() 
+HTMLManipulator.prototype.reset = function() 
 {
 	this.clearContainer(this.itemContainer);
 };
 
-HTMLMorpher.prototype.clearContainer = function(container) 
+HTMLManipulator.prototype.clearContainer = function(container) 
 {
 	while (container.firstChild)
 	{
@@ -17,7 +18,17 @@ HTMLMorpher.prototype.clearContainer = function(container)
 	}
 };
 
-HTMLMorpher.prototype.showMessage = function(message)
+HTMLManipulator.prototype.applyStats = function(stats)
+{
+	return stats.applyStatsToHTMLElement(this.container);
+};
+
+HTMLManipulator.prototype.applyStat = function(stats, stat)
+{
+	return stats.applyStatToHTMLElement(stat, this.container);
+};
+
+HTMLManipulator.prototype.showMessage = function(message)
 {
 	var elements = this.messageContainer.getElementsByClassName(message);
 	if (elements.length > 0)
@@ -27,7 +38,7 @@ HTMLMorpher.prototype.showMessage = function(message)
 	}
 };
 
-HTMLMorpher.prototype.hideAllMessages = function()
+HTMLManipulator.prototype.hideAllMessages = function()
 {
 	this.removeClass(this.messageContainer, "show");
 	var elements = this.messageContainer.getElementsByClassName("show");
@@ -37,7 +48,7 @@ HTMLMorpher.prototype.hideAllMessages = function()
 	}
 };
 
-HTMLMorpher.prototype.hideMessage = function(message)
+HTMLManipulator.prototype.hideMessage = function(message)
 {
 	var elements = this.messageContainer.getElementsByClassName(message);
 	this.removeClass(this.messageContainer, "show");
@@ -47,22 +58,22 @@ HTMLMorpher.prototype.hideMessage = function(message)
 	}
 };
 
-HTMLMorpher.prototype.getPositionClass = function(pos, side)
+HTMLManipulator.prototype.getPositionClass = function(pos, side)
 {
 	return "at-" + ["t","b"][side] + "-" + pos;
 };
 
-HTMLMorpher.prototype.addItem = function(color, pos, side, add, item)
+HTMLManipulator.prototype.addItem = function(color, pos, side, add, item)
 {
 	return this.addItemMinimal([color, this.getPositionClass(pos, side)].concat(add), item);
 };
 
-HTMLMorpher.prototype.addItemInitial = function(color, add)
+HTMLManipulator.prototype.addItemInitial = function(color, add)
 {
 	return this.addItemMinimal([color, "initial-start"].concat(add), "item-made");
 };
 
-HTMLMorpher.prototype.addItemMinimal = function(add, item)
+HTMLManipulator.prototype.addItemMinimal = function(add, item)
 {
 	var wrapper = document.createElement("div");
 	var inner = document.createElement("div");
@@ -77,12 +88,12 @@ HTMLMorpher.prototype.addItemMinimal = function(add, item)
 	return wrapper;
 };
 
-HTMLMorpher.prototype.applyClasses = function(element, classes) 
+HTMLManipulator.prototype.applyClasses = function(element, classes) 
 {
 	element.setAttribute("class", classes.join(" "));
 };
 
-HTMLMorpher.prototype.addClass = function(element, newclass) 
+HTMLManipulator.prototype.addClass = function(element, newclass) 
 {
 	var classes = element.getAttribute("class").split(" ");
 	var index = classes.indexOf(newclass);
@@ -95,7 +106,7 @@ HTMLMorpher.prototype.addClass = function(element, newclass)
 	return true;
 };
 
-HTMLMorpher.prototype.removeClass = function(element, oldclass) 
+HTMLManipulator.prototype.removeClass = function(element, oldclass) 
 {
 	var classes = element.getAttribute("class").split(" ");
 	var index = classes.indexOf(oldclass);
@@ -108,7 +119,7 @@ HTMLMorpher.prototype.removeClass = function(element, oldclass)
 	return false;
 };
 
-HTMLMorpher.prototype.changeClass = function(element, oldclass, newclass) 
+HTMLManipulator.prototype.changeClass = function(element, oldclass, newclass) 
 {
 	var classes = element.getAttribute("class").split(" ");
 	var index = classes.indexOf(oldclass);
