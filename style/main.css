@@ -1,11 +1,3 @@
-.score, .level-num
-{
-	font-weight: bold;
-	color: black;
-	text-align: center;
-	font-family: "Trebuchet MS";
-}
-
 .information
 {
 	font-size: 16px;
@@ -16,47 +8,51 @@
 	font-family: "Trebuchet MS";
 }
 
-.score
-{
-	font-size: 25px;
-	line-height: 28px;
-	height: 32px;
-}
-
-.level-num
-{
-	font-size: 18px;
-	line-height: 20px;
-	height: 20px;
-}
-
 .container
 {
-	margin: 0 auto; 
-	width: 538px;
-	height: 600px;
+	margin: 0 auto;
+	width: 620px;
+	height: 512px;
 }
 
-.game-container, .game-field-container, .play-container
+.container .game-message
+{
+	display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+	z-index: 100;
+}
+
+.game-message > *
+{
+	display: none;
+}
+
+.game-message > *.show 
+{
+	display: block;
+}
+
+.game-message > .game-over
+{
+	width: 100px;
+	height: 100px;
+}
+
+.container .game-container
 {
 	position: absolute;
-}
-
-.play-container
-{
-	margin-top: 15px;
-}
-
-.game-container
-{
-	padding: 2px 16px;
-	width: 538px;
-	height: 600px;
-}
-
-.game-field-container, .play-container
-{
 	width: 512px;
+	height: 512px;
+}
+
+.container .side-container
+{
+	float: right;
+	width: 100px;
 	height: 512px;
 }
 
@@ -69,14 +65,6 @@
 	border-width: 4px;
 	line-height: 122px;
 	border-style: outset;
-}
-
-.item, .item-made
-{
-	position: absolute;
-	width: 122px;
-	height: 122px;
-	padding: 3px 3px;
 }
 
 .at-t-1
@@ -149,84 +137,42 @@
 	border-color: #FFFF00;
 }
 
-.item
+.item, .item-made
+{
+	position: absolute;
+	width: 122px;
+	height: 122px;
+	padding: 3px 3px;
+}
+
+.item-made.wait, .item-made.wait-full
 {
 
 }
-
-.item .item-in
-{
-
-}
-
-.item-made
-{
-
-}
-
-.wait, .wait-full
-{
-
-}
-.wait .item-in, .wait-full .item-in
+.item-made.wait .item-in, .item-made.wait-full .item-in
 {
 	background: #D6D6D6;
 	border-color: #D6D6D6;
 	border-style: inset;
 }
 
-.go
+.item-made.go
 {
 
 }
-.go .item-in
+.item-made.go .item-in
 {
 
 }
 
-.bad
+.item-made.bad
 {
 
 }
-.bad .item-in
+
+.item-made.bad .item-in
 {
 	border-color: #808080;
-}
-
-.item-made.go.bad.bad-0 .item-in
-{
-	border-width: 4px;
-}
-.item-made.go.bad.bad-1 .item-in
-{
-	border-width: 6px;
-	margin-left: -2px;
-	margin-top: -2px;
-}
-.item-made.go.bad.bad-2 .item-in
-{
-	border-width: 8px;
-	margin-left: -4px;
-	margin-top: -4px;
-}
-.item-made.go.bad.bad-3 .item-in
-{
-	border-width: 10px;
-	margin-left: -6px;
-	margin-top: -6px;
-}
-.item-made.go.bad.bad-4 .item-in
-{
-	border-width: 10px;
-	margin-left: -6px;
-	margin-top: -6px;
-	background: #606060;
-	border-color: #606060;
-}
-
-.item-made .item-in
-{
-
 }
 
 .initial-start

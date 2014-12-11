@@ -1,8 +1,6 @@
 function Game(Morpher, dobads)
 {
 	this.hasBad = dobads;
-	this.scoreCounter = document.querySelector(".score");
-	this.levelCounter = document.querySelector(".level-num");
 	this.colors = ["red", "green", "yellow", "blue"];
 
 	this.size = 4;
@@ -33,12 +31,13 @@ Game.prototype.tick = function()
 	var time = Date.now();
 	var dt = time - this.lastTick;
 	this.lastTick = time;
-	if (this.hasLeft)
+	if (!this.isPaused)
 	{
-		this.score -= this.droprate * (dt / 1000.0);
+		if (this.hasLeft)
+		{
+			this.score -= this.droprate * (dt / 1000.0);
+		}
 	}
-	this.scoreCounter.textContent = Math.floor(this.score) + "";
-	this.levelCounter.textContent = this.level + "-" + this.room;
 	window.requestAnimationFrame(this.tick.bind(this));
 }
 
@@ -49,7 +48,7 @@ Game.prototype.createRandomNormals = function()
 	{
 		var col = randomArrayElement(cols);
 		removeFromArray(cols, col);
-		var element = this.morph.addItem(col, i + 1, this.currentSide, []);
+		var element = this.morph.addItem(col, i + 1, this.currentSide, [], "item");
 		element.querySelector(".item-in").onmouseover = this.onMouseOverItemOption.bind(this, col, i + 1);
 	}
 };
@@ -75,14 +74,14 @@ Game.prototype.onRoomStart = function(newpos, newside)
 	this.currentColor = this.randomColor();
 	if (this.room == this.currentBad && this.hasBad)
 	{
-		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, ["bad"]);
+		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, ["bad"], "item-made");
 	}
 	else
 	{
-		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, []);
+		var element = this.morph.addItem(this.currentColor, newpos, 1 - newside, [], "item-made");
 	}
 	element.querySelector(".item-in").onmouseover = this.onMouseOverMade.bind(this, element);
-	element.onmouseout = this.onMouseOutMade.bind(this, element);
+	element.onmouseout = this.onMouseOutMade.bind(this, element, newpos);
 	this.morph.addClass(element, "wait");
 };
 
@@ -97,20 +96,23 @@ Game.prototype.onLevelEnd = function()
 
 Game.prototype.onMouseOverItemOption = function(color, pos)
 {
-	var bonus = 0;
-	if (this.room == this.currentBad && this.hasBad)
+	if (this.hasLeft)
 	{
-		bonus = -1000;
+		var bonus = 0;
+		if (this.room == this.currentBad && this.hasBad)
+		{
+			bonus = -1000;
+		}
+		else if (color === this.currentColor)
+		{
+			bonus = 200;
+		}
+		else
+		{
+			bonus = -100;
+		}
+		this.onRoomEnd(bonus, pos, 1 - this.currentSide);
 	}
-	else if (color === this.currentColor)
-	{
-		bonus = 200;
-	}
-	else
-	{
-		bonus = -100;
-	}
-	this.onRoomEnd(bonus, pos, 1 - this.currentSide);
 };
 
 Game.prototype.onMouseOutMade = function(element)
@@ -121,9 +123,15 @@ Game.prototype.onMouseOutMade = function(element)
 	}
 };
 
-Game.prototype.onMouseOverMade = function(element)
+Game.prototype.onMouseOverMade = function(element, pos)
 {
-
+	if (this.hasLeft)
+	{
+		if (this.room == this.currentBad && this.hasBad)
+		{
+			this.onRoomEnd(2000, pos, this.currentSide);
+		}
+	}
 };
 
 Game.prototype.randomColor = function()
@@ -131,8 +139,33 @@ Game.prototype.randomColor = function()
 	return randomArrayElement(this.colors);
 };
 
-Game.prototype.setup = function()
+Game.prototype.getLevelRoom = function()
 {
+	return this.level * this.levelLength + this.room;
+};
+
+Game.prototype.closeAllMessages = function()
+{
+	this.morph.hideAllMessages();
+	this.isPaused = false;
+};
+
+Game.prototype.closeMessage = function(message)
+{
+	this.morph.hideMessage(message);
+	this.isPaused = false;
+};
+
+Game.prototype.openMessage = function(message)
+{
+	this.morph.showMessage(message);
+	this.isPaused = true;
+};
+
+Game.prototype.gameStart = function()
+{
+	this.morph.reset();
+	this.isPaused = true;
 	this.currentSide = 0;
 	this.currentColor = this.randomColor();
 	this.currentBad = Math.floor(Math.random() * (this.levelLength - 1)) + 1;
@@ -146,4 +179,10 @@ Game.prototype.setup = function()
 	element.querySelector(".item-in").onmouseover = (function() {this.morph.changeClass(element, "wait-full", "wait")}).bind(this);
 	element.onmouseout = this.onMouseOutMade.bind(this, element);
 	this.createRandomNormals();
+	this.closeAllMessages();
+};
+
+Game.prototype.setup = function()
+{
+	this.gameStart();
 };

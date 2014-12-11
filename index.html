@@ -1,46 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Roots</title>
+	<meta charset="utf-8">
+	<title>Roots</title>
 
-  <link href="style/main.css" rel="stylesheet" type="text/css">
-  <link rel="shortcut icon" href="favicon.ico">
-  
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+	<link href="style/main.css" rel="stylesheet" type="text/css">
+	<link rel="shortcut icon" href="favicon.ico">
+	
+	<meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
-  <div class="container">
-    <div class="game-container">
-      <div class="score">
-	  
-	  </div>
-	  <div class="level-num">
-	  
-	  </div>
-	  <div class="play-container">
-        <div class="game-field-container">
-	  
-        </div>
+	<div class="container">
+		<div class="game-container">
+			<div class="items-container">
 
-        <div class="items-container">
+			</div>
+		</div>
+		<div class="side-container">
+			<div class="score-container">
 
-        </div>
-	  </div>
-    </div>
-  </div>
-  <div class="information">
-  <p>To start place your mouse in the gray box.</p>
-  <p>When you move your mouse off of the gray box, it will change color. Move to the opposite box of the same color and repeat.</p>
-  <p>Hitting the correct color will give 200 points, but the wrong color will take away 100.</p>
-  <p>You will loose points over time, and the higher level you are the faster you loose points.</p>
-  <p>You will stop loosing points when your mouse is in a grey box.</p>
-  <p>See how long you can keep your points in the positive.</p>
-  </div>
+			</div>
+			<div class="best-score-container">
 
-  <script src="js/html_morpher.js"></script>
-  <script src="js/game_data.js"></script>
-  <script src="js/game.js"></script>
-  <script src="js/application.js"></script>
+			</div>
+		</div>
+		<div class="game-message">
+			<div class="game-over show">
+				<div class="lower">
+					<a class="retry-button">Try Again</a>
+				</div>
+			</div>
+			<div class="game-stats">
+				<div class="lower">
+					<a class="back-button">Back</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="information">
+	<p>To start place your mouse in the gray box.</p>
+	<p>When you move your mouse off of the gray box, it will change color. Move to the opposite box of the same color and repeat.</p>
+	<p>Hitting the correct color will give 200 points, but the wrong color will take away 100.</p>
+	<p>You will loose points over time, and the higher level you are the faster you loose points.</p>
+	<p>You will stop loosing points when your mouse is in a grey box.</p>
+	<p>See how long you can keep your points in the positive.</p>
+	</div>
+
+	<script src="js/html_morpher.js"></script>
+	<script src="js/game_data.js"></script>
+	<script src="js/game.js"></script>
+	<script src="js/application.js"></script>
 </body>
 </html>
