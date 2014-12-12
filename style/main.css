@@ -26,12 +26,17 @@
 	z-index: 100;
 }
 
-.game-message > *
+.level-stat
+{
+	display: inline-block;
+}
+
+.game-message > *, .game-message
 {
 	display: none;
 }
 
-.game-message > *.show 
+.game-message > *.show, .game-message.show
 {
 	display: block;
 }
@@ -54,6 +59,11 @@
 	float: right;
 	width: 100px;
 	height: 512px;
+}
+
+.score-container
+{
+	text-align: center;
 }
 
 .item .item-in, .item-made .item-in
