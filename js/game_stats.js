@@ -48,10 +48,6 @@ GameStats.prototype.getRawStat = function(stat)
 	{
 		return this.gamestats[stat];
 	}
-	else
-	{
-		return "";
-	}
 };
 
 GameStats.prototype.getStat = function(stat)

@@ -43,13 +43,45 @@ Game.prototype.tick = function()
 		this.onGameEnd();
 	}
 	this.setStat("score", this.score);
+	this.calculatePlayerStats();
 	window.requestAnimationFrame(this.tick.bind(this));
-}
+};
+
+Game.prototype.calculatePlayerStats = function()
+{
+	var bestscore = this.playerstats.getRawStat("best-score") || -1;
+	var bestlevel = this.playerstats.getRawStat("best-level-level") || -1;
+	var bestroom = this.playerstats.getRawStat("best-level-room") || -1;
+	if (this.score > bestscore)
+	{
+		this.setPlayerStat("best-score", this.score);
+	}
+	var flag = false;
+	if (this.level > bestlevel)
+	{
+		flag = true;
+	}
+	else if (this.level == bestlevel && this.room > bestroom)
+	{
+		flag = true;
+	}
+	if (flag)
+	{
+		this.setPlayerStat("best-level-level", this.level);
+		this.setPlayerStat("best-level-room", this.room);
+	}
+};
 
 Game.prototype.setStat = function(stat, val)
 {
 	this.stats.setGameStat(stat, val);
 	this.manip.applyStat(this.stats, stat);
+};
+
+Game.prototype.setPlayerStat = function(stat, val)
+{
+	this.playerstats.setGameStat(stat, val);
+	this.manip.applyStat(this.playerstats, stat);
 };
 
 Game.prototype.createRandomNormals = function()
@@ -109,40 +141,49 @@ Game.prototype.onLevelEnd = function()
 
 Game.prototype.onMouseOverItemOption = function(color, pos)
 {
-	if (this.hasLeft)
+	if (!this.isPaused)
 	{
-		var bonus = 0;
-		if (this.room == this.currentBad && this.hasBad)
+		if (this.hasLeft)
 		{
-			bonus = -1000;
+			var bonus = 0;
+			if (this.room == this.currentBad && this.hasBad)
+			{
+				bonus = -1000;
+			}
+			else if (color === this.currentColor)
+			{
+				bonus = 200;
+			}
+			else
+			{
+				bonus = -100;
+			}
+			this.onRoomEnd(bonus, pos, 1 - this.currentSide);
 		}
-		else if (color === this.currentColor)
-		{
-			bonus = 200;
-		}
-		else
-		{
-			bonus = -100;
-		}
-		this.onRoomEnd(bonus, pos, 1 - this.currentSide);
 	}
 };
 
 Game.prototype.onMouseOutMade = function(element)
 {
-	if (this.manip.changeClass(element, "wait", "go"))
+	if (!this.isPaused)
 	{
-		this.hasLeft = true;
+		if (this.manip.changeClass(element, "wait", "go"))
+		{
+			this.hasLeft = true;
+		}
 	}
 };
 
 Game.prototype.onMouseOverMade = function(element, pos)
 {
-	if (this.hasLeft)
+	if (!this.isPaused)
 	{
-		if (this.room == this.currentBad && this.hasBad)
+		if (this.hasLeft)
 		{
-			this.onRoomEnd(2000, pos, this.currentSide);
+			if (this.room == this.currentBad && this.hasBad)
+			{
+				this.onRoomEnd(2000, pos, this.currentSide);
+			}
 		}
 	}
 };
@@ -176,9 +217,19 @@ Game.prototype.onGameEnd = function()
 	this.openMessage("game-over");
 };
 
+Game.prototype.restart = function()
+{
+	this.gameStart();
+}
+
 Game.prototype.gameStart = function()
 {
+	if (this.stats)
+	{
+		delete this.stats;
+	}
 	this.stats = new GameStats();
+	
 	this.manip.reset();
 	this.isPaused = true;
 	this.currentSide = 0;
@@ -189,6 +240,11 @@ Game.prototype.gameStart = function()
 	this.hasLeft = false;
 	this.score = 500;
 	this.droprate = 30;
+	
+	for (i = 0; i < this.manip.restartButtons.length; i++)
+	{
+		this.manip.restartButtons[i].onmouseup = this.restart.bind(this);
+	}
 	
 	this.stats.setGameStatMorpher("score", function(val) { return Math.floor(val); });
 	
@@ -204,5 +260,7 @@ Game.prototype.gameStart = function()
 
 Game.prototype.setup = function()
 {
+	this.playerstats = new GameStats();
+	this.playerstats.setGameStatMorpher("best-score", function(val) { return Math.floor(val); });
 	this.gameStart();
 };

@@ -11,19 +11,131 @@
 .container
 {
 	margin: 0 auto;
-	width: 620px;
+	width: 712px;
 	height: 512px;
 }
 
-.container .game-message
+.container > .game-message
+{
+	width: 512px;
+	height: 512px;
+	position: absolute;
+	display: none;
+	z-index: 100;
+}
+.container > .game-message.show
+{
+	display: table;
+}
+
+.game-message > .message-container
+{
+	display: table-cell;
+    vertical-align: middle;
+}
+
+.message-container > *
 {
 	display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-	z-index: 100;
+	margin-left: auto;
+	margin-right: auto;
+}
+.message-container > *.show
+{
+	display: block;
+}
+
+.message-container > .game-over
+{
+	text-transform: uppercase;
+	border-radius: 4px;
+	background: #FF9999;
+	font-size: 24px;
+	line-height: 24px;
+	font-weight: normal;
+	color: black;
+	text-align: center;
+	font-family: "Trebuchet MS";
+	width: 256px;
+	padding: 6px 0px;
+}
+
+.message-container .lower
+{
+	margin-top: 8px;
+}
+
+.game-over .retry-button
+{
+	border-radius: 4px;
+	background: #FF1919;
+	font-size: 18px;
+	line-height: 18px;
+	padding: 3px 3px;
+	display: inline-block;
+	cursor:pointer;
+}
+
+.container > .game-container
+{
+	position: absolute;
+	width: 504px;
+	height: 504px;
+	border-radius: 4px;
+	background: #E8E8E8;
+	padding: 4px 4px;
+}
+
+.container > .side-container
+{
+	float: right;
+	width: 192px;
+	height: 512px;
+}
+
+.score-container, .best-score-container
+{
+	border-radius: 4px;
+	background: #E8E8E8;
+	font-weight: bold;
+	color: black;
+	text-align: center;
+	font-family: "Trebuchet MS";
+	padding: 4px 0px;
+	margin-bottom: 8px;
+}
+
+.score-container:before, .best-score-container:before
+{
+	width: 100%;
+	position: relative;
+    text-transform: uppercase;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    color: black;
+}
+
+.score-container:before
+{
+	content: "Points"; 
+}
+
+.best-score-container:before
+{
+  content: "Best";
+}
+
+.cents-container
+{
+	margin: auto 0;
+	width: 100%;
+	position: absolute;
+    text-transform: uppercase;
+    font-size: 28px;
+    line-height: 28px;
+    text-align: center;
+    color: black;
 }
 
 .level-stat
@@ -31,49 +143,24 @@
 	display: inline-block;
 }
 
-.game-message > *, .game-message
+#score.stat, #best-score.stat
 {
-	display: none;
+	font-size: 24px;
 }
 
-.game-message > *.show, .game-message.show
+#level-level.stat, #level-room.stat, #best-level-level.stat, #best-level-room.stat
 {
-	display: block;
-}
-
-.game-message > .game-over
-{
-	width: 100px;
-	height: 100px;
-}
-
-.container .game-container
-{
-	position: absolute;
-	width: 512px;
-	height: 512px;
-}
-
-.container .side-container
-{
-	float: right;
-	width: 100px;
-	height: 512px;
-}
-
-.score-container
-{
-	text-align: center;
+	font-size: 16px;
 }
 
 .item .item-in, .item-made .item-in
 {
 	border-radius: 4px;
 	position: absolute;
-	width: 114px;
-	height: 114px;
+	width: 110px;
+	height: 110px;
 	border-width: 4px;
-	line-height: 122px;
+	line-height: 104px;
 	border-style: outset;
 }
 
@@ -85,45 +172,45 @@
 }
 .at-t-2
 {
-	-webkit-transform: translate(128px, 0px);
-	-moz-transform: translate(128px, 0px);
-	transform: translate(128px, 0px);
+	-webkit-transform: translate(126px, 0px);
+	-moz-transform: translate(126px, 0px);
+	transform: translate(126px, 0px);
 }
 .at-t-3
 {
-	-webkit-transform: translate(256px, 0px);
-	-moz-transform: translate(256px, 0px);
-	transform: translate(256px, 0px);
+	-webkit-transform: translate(252px, 0px);
+	-moz-transform: translate(252px, 0px);
+	transform: translate(252px, 0px);
 }
 .at-t-4
 {
-	-webkit-transform: translate(384px, 0px);
-	-moz-transform: translate(384px, 0px);
-	transform: translate(384px, 0px);
+	-webkit-transform: translate(378px, 0px);
+	-moz-transform: translate(378px, 0px);
+	transform: translate(378px, 0px);
 }
 .at-b-1
 {
-	-webkit-transform: translate(0px, 384px);
-	-moz-transform: translate(0px, 384px);
-	transform: translate(0px, 384px);
+	-webkit-transform: translate(0px, 378px);
+	-moz-transform: translate(0px, 378px);
+	transform: translate(0px, 378px);
 }
 .at-b-2
 {
-	-webkit-transform: translate(128px, 384px);
-	-moz-transform: translate(128px, 384px);
-	transform: translate(128px, 384px);
+	-webkit-transform: translate(126px, 378px);
+	-moz-transform: translate(126px, 378px);
+	transform: translate(126px, 378px);
 }
 .at-b-3
 {
-	-webkit-transform: translate(256px, 384px);
-	-moz-transform: translate(256px, 384px);
-	transform: translate(256px, 384px);
+	-webkit-transform: translate(252px, 378px);
+	-moz-transform: translate(252px, 378px);
+	transform: translate(252px, 378px);
 }
 .at-b-4
 {
-	-webkit-transform: translate(384px, 384px);
-	-moz-transform: translate(384px, 384px);
-	transform: translate(384px, 384px);
+	-webkit-transform: translate(378px, 378px);
+	-moz-transform: translate(378px, 378px);
+	transform: translate(378px, 378px);
 }
 
 .red .item-in
@@ -150,9 +237,9 @@
 .item, .item-made
 {
 	position: absolute;
-	width: 122px;
-	height: 122px;
-	padding: 3px 3px;
+	width: 118px;
+	height: 118px;
+	padding: 4px 4px;
 }
 
 .item-made.wait, .item-made.wait-full
@@ -187,7 +274,7 @@
 
 .initial-start
 {
-	-webkit-transform: translate(192px, 384px);
-	-moz-transform: translate(192px, 384px);
-	transform: translate(192px, 384px);
+	-webkit-transform: translate(189px, 378px);
+	-moz-transform: translate(189px, 378px);
+	transform: translate(189px, 378px);
 }

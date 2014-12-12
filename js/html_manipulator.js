@@ -3,6 +3,7 @@ function HTMLManipulator()
 	this.container = document.querySelector(".container");
 	this.itemContainer = document.querySelector(".items-container");
 	this.messageContainer = document.querySelector(".game-message");
+	this.restartButtons = document.querySelectorAll(".game-over .retry-button");
 };
 
 HTMLManipulator.prototype.reset = function() 
