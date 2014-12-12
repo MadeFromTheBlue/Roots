@@ -98,6 +98,14 @@ Game.prototype.createRandomNormals = function()
 
 Game.prototype.onRoomEnd = function(scorebonus, newpos, newside)
 {
+	this.setStat("total", this.made + this.missed);
+	this.setStat("correct", this.made);
+	this.setStat("streak", this.streak);
+	var beststreak = this.playerstats.getRawStat("best-streak") || 0;
+	if (this.streak > beststreak)
+	{
+		this.setPlayerStat("best-streak", this.streak);
+	}
 	this.score += scorebonus;
 	this.manip.reset();
 	this.room++;
@@ -146,17 +154,35 @@ Game.prototype.onMouseOverItemOption = function(color, pos)
 		if (this.hasLeft)
 		{
 			var bonus = 0;
-			if (this.room == this.currentBad && this.hasBad)
+			if ((this.room == this.currentBad) && this.hasBad)
 			{
-				bonus = -1000;
-			}
-			else if (color === this.currentColor)
-			{
-				bonus = 200;
+				if (color === this.currentColor)
+				{
+					bonus = -200;
+					this.missed++;
+					this.streak = 0;
+				}
+				else
+				{
+					bonus = 600;
+					this.made++;
+					this.streak++;
+				}
 			}
 			else
 			{
-				bonus = -100;
+				if (color === this.currentColor)
+				{
+					bonus = 200;
+					this.made++;
+					this.streak++;
+				}
+				else
+				{
+					bonus = -100;
+					this.missed++;
+					this.streak = 0;
+				}
 			}
 			this.onRoomEnd(bonus, pos, 1 - this.currentSide);
 		}
@@ -178,13 +204,7 @@ Game.prototype.onMouseOverMade = function(element, pos)
 {
 	if (!this.isPaused)
 	{
-		if (this.hasLeft)
-		{
-			if (this.room == this.currentBad && this.hasBad)
-			{
-				this.onRoomEnd(2000, pos, this.currentSide);
-			}
-		}
+		
 	}
 };
 
@@ -240,6 +260,9 @@ Game.prototype.gameStart = function()
 	this.hasLeft = false;
 	this.score = 500;
 	this.droprate = 30;
+	this.made = 0;
+	this.missed = 0;
+	this.streak = 0;
 	
 	for (i = 0; i < this.manip.restartButtons.length; i++)
 	{
@@ -250,6 +273,9 @@ Game.prototype.gameStart = function()
 	
 	this.setStat("level-level", this.level);
 	this.setStat("level-room", this.room);
+	this.setStat("total", 0);
+	this.setStat("correct", 0);
+	this.setStat("streak", 0);
 	
 	var element = this.manip.addItemInitial(this.currentColor, ["wait-full"]);
 	element.querySelector(".item-in").onmouseover = (function() {this.manip.changeClass(element, "wait-full", "wait")}).bind(this);
@@ -261,6 +287,7 @@ Game.prototype.gameStart = function()
 Game.prototype.setup = function()
 {
 	this.playerstats = new GameStats();
+	this.setPlayerStat("best-streak", 0);
 	this.playerstats.setGameStatMorpher("best-score", function(val) { return Math.floor(val); });
 	this.gameStart();
 };

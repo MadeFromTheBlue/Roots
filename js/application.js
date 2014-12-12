@@ -1,5 +1,5 @@
 window.requestAnimationFrame(function () 
 {
-	new Game(HTMLManipulator, false);
+	new Game(HTMLManipulator, true);
 }
 );

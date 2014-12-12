@@ -16,20 +16,22 @@
 		</div>
 		<div class="side-container">
 			<div class="score-container">
-				<div class="stat" id="score"></div>
-				<div class="level-stats">
-					<div class="stat level-stat" id="level-level"></div>
-					-
-					<div class="stat level-stat" id="level-room"></div>
-				</div>
+				<br>
+				<div class="stat" id="score"></div> Points
+				<br>
+				Round <div class="stat" id="level-level"></div>-<div class="stat" id="level-room"></div>
+				<br>
+				<div class="stat" id="correct"></div>/<div class="stat" id="total"></div> Correct
+				<br>
+				<div class="stat" id="streak"></div> Round Streak
 			</div>
 			<div class="best-score-container">
-				<div class="stat" id="best-score"></div>
-				<div class="level-stats">
-					<div class="stat level-stat" id="best-level-level"></div>
-					-
-					<div class="stat level-stat" id="best-level-room"></div>
-				</div>
+				<br>
+				<div class="stat" id="best-score"></div> Points
+				<br>
+				Round <div class="stat" id="best-level-level"></div>-<div class="stat" id="best-level-room"></div>
+				<br>
+				<div class="stat" id="best-streak">0</div> Round Streak
 			</div>
 		</div>
 		<div class="game-message">
@@ -48,13 +50,27 @@
 			</div>
 		</div>
 	</div>
+	
+	<hr>
+	
+	<div class="information-title">
+		How To Play
+	</div>
+	
 	<div class="information">
-	<p>To start place your mouse in the gray box.</p>
-	<p>When you move your mouse off of the gray box, it will change color. Move to the opposite box of the same color and repeat.</p>
-	<p>Hitting the correct color will give 200 points, but the wrong color will take away 100.</p>
-	<p>You will loose points over time, and the higher level you are the faster you loose points.</p>
-	<p>You will stop loosing points when your mouse is in a grey box.</p>
-	<p>See how long you can keep your points in the positive.</p>
+		<ul>
+			<li>To start place your mouse in the gray box.</li>
+			<li>When you move your mouse off of the box, it will change color. Move to the opposite box of the same color and repeat.</li>
+			<li>Hitting the correct color will give 200 points, but the wrong color will take away 100.</li>
+			<li>However, now and then you will get a liar, with a black outline.</li>
+			<li>Liars give 500 point if you choose a different color and take 200 away if you chose the 'correct' color.</li>
+			<li>You will loose points over time, and the higher level (round) you are the faster you loose points.</li>
+			<li>See how long you can keep your points in the positive!</li>
+		</ul>
+	</div>
+	
+	<div class="information-title">
+		Good luck!
 	</div>
 
 	<script src="js/html_manipulator.js"></script>

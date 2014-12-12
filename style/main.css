@@ -1,13 +1,3 @@
-.information
-{
-	font-size: 16px;
-	line-height: 18px;
-	font-weight: normal;
-	color: black;
-	text-align: center;
-	font-family: "Trebuchet MS";
-}
-
 .container
 {
 	margin: 0 auto;
@@ -118,7 +108,7 @@
 
 .score-container:before
 {
-	content: "Points"; 
+	content: "Current"; 
 }
 
 .best-score-container:before
@@ -138,11 +128,6 @@
     color: black;
 }
 
-.level-stat
-{
-	display: inline-block;
-}
-
 #score.stat, #best-score.stat
 {
 	font-size: 24px;
@@ -151,6 +136,16 @@
 #level-level.stat, #level-room.stat, #best-level-level.stat, #best-level-room.stat
 {
 	font-size: 16px;
+}
+
+#total.stat, #correct.stat, #best-skill.stat
+{
+	font-size: 16px;
+}
+
+.stat
+{
+	display: inline-block;
 }
 
 .item .item-in, .item-made .item-in
@@ -277,4 +272,29 @@
 	-webkit-transform: translate(189px, 378px);
 	-moz-transform: translate(189px, 378px);
 	transform: translate(189px, 378px);
+}
+
+.information
+{
+	margin-left: 20%;
+	margin-right: 20%;
+	width: 60%;
+	font-size: 16px;
+	line-height: 20px;
+	font-weight: normal;
+	text-transform: none;
+	color: black;
+	text-align: left;
+	font-family: "Trebuchet MS";
+}
+
+.information-title
+{
+	font-size: 24px;
+	line-height: 24px;
+	font-weight: normal;
+	text-transform: uppercase;
+	color: black;
+	text-align: center;
+	font-family: "Trebuchet MS";
 }
