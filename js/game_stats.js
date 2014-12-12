@@ -4,6 +4,12 @@ function GameStats()
 	this.gamestatmorphers = new Object();
 };
 
+GameStats.prototype.setStatsData = function(data)
+{
+	delete this.gamestats;
+	this.gamestats = data;
+};
+
 GameStats.prototype.setGameStat = function(stat, value)
 {
 	this.gamestats[stat] = value;

@@ -10,7 +10,7 @@ function Game(Manipulator, dobads)
 	this.setup();
 	this.lastTick = Date.now();
 	window.requestAnimationFrame(this.tick.bind(this));
-}
+};
 
 removeFromArray = function(array, element)
 {
@@ -49,9 +49,9 @@ Game.prototype.tick = function()
 
 Game.prototype.calculatePlayerStats = function()
 {
-	var bestscore = this.playerstats.getRawStat("best-score") || -1;
-	var bestlevel = this.playerstats.getRawStat("best-level-level") || -1;
-	var bestroom = this.playerstats.getRawStat("best-level-room") || -1;
+	var bestscore = this.playerstats.getRawStat("best-score");
+	var bestlevel = this.playerstats.getRawStat("best-level-level");
+	var bestroom = this.playerstats.getRawStat("best-level-room");
 	if (this.score > bestscore)
 	{
 		this.setPlayerStat("best-score", this.score);
@@ -101,7 +101,7 @@ Game.prototype.onRoomEnd = function(scorebonus, newpos, newside)
 	this.setStat("total", this.made + this.missed);
 	this.setStat("correct", this.made);
 	this.setStat("streak", this.streak);
-	var beststreak = this.playerstats.getRawStat("best-streak") || 0;
+	var beststreak = this.playerstats.getRawStat("best-streak");
 	if (this.streak > beststreak)
 	{
 		this.setPlayerStat("best-streak", this.streak);
@@ -113,6 +113,7 @@ Game.prototype.onRoomEnd = function(scorebonus, newpos, newside)
 	{
 		this.onLevelEnd();
 	}
+	this.savePlayerData()
 	this.onRoomStart(newpos, newside);
 };
 
@@ -240,7 +241,7 @@ Game.prototype.onGameEnd = function()
 Game.prototype.restart = function()
 {
 	this.gameStart();
-}
+};
 
 Game.prototype.gameStart = function()
 {
@@ -288,6 +289,48 @@ Game.prototype.setup = function()
 {
 	this.playerstats = new GameStats();
 	this.setPlayerStat("best-streak", 0);
+	this.setPlayerStat("best-score", 0);
+	this.setPlayerStat("best-level-level", 0);
+	this.setPlayerStat("best-level-room", 0);
+	var newdata = this.getSavedPlayerData();
+	if (newdata)
+	{
+		this.playerstats.setStatsData(newdata);
+	}
 	this.playerstats.setGameStatMorpher("best-score", function(val) { return Math.floor(val); });
 	this.gameStart();
+	this.manip.applyStats(this.playerstats);
+};
+
+Game.prototype.getSavedPlayerData = function()
+{
+	try
+	{
+		var savedData = window.localStorage.getItem("playerStats");
+		if (savedData)
+		{
+			var data = JSON.parse(savedData);
+			if (data)
+			{
+				return data;
+			}
+		}
+	}
+	catch (error) 
+	{
+	}
+};
+
+Game.prototype.savePlayerData = function()
+{
+	var data = JSON.stringify(this.playerstats.gamestats);
+	try 
+	{
+		window.localStorage.setItem("playerStats", data);
+		return true;
+	}
+	catch (error) 
+	{
+		return false;
+	}
 };
